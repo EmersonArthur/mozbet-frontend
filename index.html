@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>MozBet</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f0f0f0; }
+    header { background: black; color: white; padding: 1rem; text-align: center; }
+    .banner { width: 100%; height: auto; }
+    .section { padding: 1rem; }
+    iframe { border: none; width: 100%; height: 400px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌟 MOZBET</h1>
+  </header>
+
+  <div class="section">
+    <img class="banner" src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="MozBet Banner">
+  </div>
+
+  <div class="section">
+    <h2>🎮 Jogo Rápido</h2>
+    <iframe src="https://html5.gamedistribution.com/4b6638c6722e44aab9aaf4c3b3dfd9c5/" allowfullscreen></iframe>
+  </div>
+
+  <div class="section">
+    <h2>💰 Fazer Aposta</h2>
+    <form id="betForm">
+      <input type="number" id="valor" placeholder="Valor da aposta" required>
+      <button type="submit">Apostar</button>
+    </form>
+    <p id="resultado"></p>
+  </div>
+
+  <script>
+    document.getElementById("betForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const valor = document.getElementById("valor").value;
+      const res = await fetch("https://mozbet-backend.onrender.com/apostar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: "123", valor: parseFloat(valor) })
+      });
+      const data = await res.json();
+      document.getElementById("resultado").innerText = data.mensagem;
+    });
+  </script>
+</body>
+</html>
